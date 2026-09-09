@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RedGod-Porn-Engine</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>RedGod-Porn-Engine</h1>
+    <div class="header-right">
+      <div id="status" class="status">…</div>
+      <button id="settings-btn" class="icon-btn" type="button" title="Paramètres" hidden>⚙️</button>
+    </div>
+  </header>
+
+  <div id="settings-overlay" class="settings-overlay" hidden>
+    <section id="settings-panel" class="settings-panel">
+      <div class="settings-header">
+        <h2>Paramètres</h2>
+        <button id="settings-close" class="icon-btn" type="button" title="Fermer">✕</button>
+      </div>
+      <div class="setting-row">
+        <label><input type="checkbox" id="lan-toggle" /> Serveur accessible sur le réseau local (téléphone, autre PC…)</label>
+        <p class="setting-hint">Désactivé par défaut. Une fois activé, l'appareil qui héberge reste le seul à pouvoir écrire (voter/proposer des tags) — les autres appareils du réseau n'ont accès qu'à la recherche.</p>
+        <div id="lan-addresses" class="lan-addresses"></div>
+      </div>
+    </section>
+  </div>
+
+  <form id="search-form" class="search-form">
+    <input type="search" id="q" placeholder="Rechercher un titre ou un tag…" autocomplete="off" />
+    <select id="kind">
+      <option value="">Tous types</option>
+      <option value="video">Vidéos</option>
+      <option value="actor">Acteurs</option>
+    </select>
+    <select id="sort">
+      <option value="score">Mieux notés</option>
+      <option value="recent">Plus récents</option>
+    </select>
+    <button type="submit">Chercher</button>
+  </form>
+
+  <section id="add-panel" class="add-panel" hidden>
+    <details>
+      <summary>Ajouter une vidéo à l'index</summary>
+      <form id="add-form">
+        <input type="url" id="add-sourceUrl" placeholder="URL source (https://…)" required />
+        <input type="text" id="add-title" placeholder="Titre" required />
+        <input type="url" id="add-thumbnailUrl" placeholder="URL vignette (optionnel)" />
+        <button type="submit">Ajouter</button>
+      </form>
+    </details>
+  </section>
+
+  <main id="results" class="results"></main>
+
+  <template id="media-card-template">
+    <article class="media-card">
+      <a class="thumb-link" target="_blank" rel="noopener noreferrer">
+        <img class="thumb" alt="" />
+      </a>
+      <div class="body">
+        <a class="title" target="_blank" rel="noopener noreferrer"></a>
+        <div class="tags"></div>
+        <div class="row">
+          <span class="score"></span>
+          <button class="vote-up" title="Voter pour">▲</button>
+          <button class="vote-down" title="Voter contre">▼</button>
+          <button class="propose-tag">+ tag</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
