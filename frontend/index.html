@@ -8,59 +8,127 @@
 </head>
 <body>
   <header>
+    <button id="sidebar-toggle-btn" class="icon-btn" type="button" title="Afficher/masquer la navigation">☰</button>
     <h1>RedGod-Porn-Engine</h1>
     <div class="header-right">
       <div id="status" class="status">…</div>
-      <button id="settings-btn" class="icon-btn" type="button" title="Paramètres" hidden>⚙️</button>
     </div>
   </header>
 
-  <div id="settings-overlay" class="settings-overlay" hidden>
-    <section id="settings-panel" class="settings-panel">
-      <div class="settings-header">
-        <h2>Paramètres</h2>
-        <button id="settings-close" class="icon-btn" type="button" title="Fermer">✕</button>
+  <div class="app-shell">
+    <nav id="sidebar" class="sidebar" data-state="expanded">
+      <div class="sidebar-top">
+        <button id="sidebar-collapse-btn" class="icon-btn sidebar-collapse-btn" type="button" title="Réduire">«</button>
       </div>
-      <div class="setting-row">
-        <label><input type="checkbox" id="lan-toggle" /> Serveur accessible sur le réseau local (téléphone, autre PC…)</label>
-        <p class="setting-hint">Désactivé par défaut. Une fois activé, l'appareil qui héberge reste le seul à pouvoir écrire (voter/proposer des tags) — les autres appareils du réseau n'ont accès qu'à la recherche.</p>
-        <div id="lan-addresses" class="lan-addresses"></div>
+
+      <ul class="nav-list">
+        <li>
+          <a href="#/search" class="nav-link" data-page="search" title="Recherche">
+            <span class="nav-icon">🔍</span><span class="nav-label">Recherche</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="nav-section-label" title="Contribuer">
+        <span class="nav-icon">🤝</span><span class="nav-label">Contribuer</span>
       </div>
-    </section>
+      <ul class="nav-list">
+        <li>
+          <a href="#/contribute/dashboard" class="nav-link" data-page="dashboard" title="Dashboard">
+            <span class="nav-icon">📊</span><span class="nav-label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="#/contribute/actors" class="nav-link" data-page="actors" title="Acteurs">
+            <span class="nav-icon">🎭</span><span class="nav-label">Acteurs</span>
+          </a>
+        </li>
+        <li>
+          <a href="#/contribute/videos" class="nav-link" data-page="videos" title="Vidéos">
+            <span class="nav-icon">🎬</span><span class="nav-label">Vidéos</span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="nav-list nav-list-bottom">
+        <li>
+          <a href="#/settings" id="nav-settings" class="nav-link" data-page="settings" title="Paramètres" hidden>
+            <span class="nav-icon">⚙️</span><span class="nav-label">Paramètres</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <main class="content">
+      <!-- Recherche -->
+      <section class="page" data-page="search">
+        <form id="search-form" class="search-form">
+          <input type="search" id="q" placeholder="Rechercher un titre ou un tag…" autocomplete="off" />
+          <select id="kind">
+            <option value="">Tous types</option>
+            <option value="video">Vidéos</option>
+            <option value="actor">Acteurs</option>
+          </select>
+          <select id="sort">
+            <option value="score">Mieux notés</option>
+            <option value="recent">Plus récents</option>
+          </select>
+          <button type="submit">Chercher</button>
+        </form>
+
+        <div id="search-results" class="results"></div>
+      </section>
+
+      <!-- Paramètres -->
+      <section class="page" data-page="settings" hidden>
+        <div class="page-header"><h2>Paramètres</h2></div>
+        <div class="settings-panel-inline">
+          <div class="setting-row">
+            <label><input type="checkbox" id="lan-toggle" /> Serveur accessible sur le réseau local (téléphone, autre PC…)</label>
+            <p class="setting-hint">Désactivé par défaut. Une fois activé, l'appareil qui héberge reste le seul à pouvoir écrire (voter/proposer des tags) — les autres appareils du réseau n'ont accès qu'à la recherche.</p>
+            <div id="lan-addresses" class="lan-addresses"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contribuer / Dashboard -->
+      <section class="page" data-page="dashboard" hidden>
+        <div class="page-header"><h2>Dashboard</h2></div>
+        <div id="dashboard-identity" class="dashboard-identity"></div>
+        <div id="dashboard-stats" class="dashboard-stats"></div>
+      </section>
+
+      <!-- Contribuer / Acteurs -->
+      <section class="page" data-page="actors" hidden>
+        <div class="page-header"><h2>Acteurs</h2></div>
+        <p id="actors-readonly-note" class="readonly-note" hidden>Lecture seule — l'ajout d'acteurs nécessite un accès en écriture sur ce dépôt.</p>
+        <form id="add-actor-form" class="add-form">
+          <input type="text" id="add-actor-name" placeholder="Nom de l'acteur/actrice" required />
+          <button type="submit">Ajouter</button>
+        </form>
+        <div id="actors-results" class="results"></div>
+      </section>
+
+      <!-- Contribuer / Vidéos -->
+      <section class="page" data-page="videos" hidden>
+        <div class="page-header"><h2>Vidéos</h2></div>
+        <p id="videos-readonly-note" class="readonly-note" hidden>Lecture seule — l'ajout de vidéos nécessite un accès en écriture sur ce dépôt.</p>
+        <form id="add-video-form" class="add-form">
+          <input type="url" id="add-video-sourceUrl" placeholder="URL source (https://…)" required />
+          <input type="text" id="add-video-title" placeholder="Titre" required />
+          <input type="url" id="add-video-thumbnailUrl" placeholder="URL vignette (optionnel)" />
+          <button type="submit">Ajouter</button>
+        </form>
+        <div id="videos-results" class="results"></div>
+      </section>
+    </main>
   </div>
-
-  <form id="search-form" class="search-form">
-    <input type="search" id="q" placeholder="Rechercher un titre ou un tag…" autocomplete="off" />
-    <select id="kind">
-      <option value="">Tous types</option>
-      <option value="video">Vidéos</option>
-      <option value="actor">Acteurs</option>
-    </select>
-    <select id="sort">
-      <option value="score">Mieux notés</option>
-      <option value="recent">Plus récents</option>
-    </select>
-    <button type="submit">Chercher</button>
-  </form>
-
-  <section id="add-panel" class="add-panel" hidden>
-    <details>
-      <summary>Ajouter une vidéo à l'index</summary>
-      <form id="add-form">
-        <input type="url" id="add-sourceUrl" placeholder="URL source (https://…)" required />
-        <input type="text" id="add-title" placeholder="Titre" required />
-        <input type="url" id="add-thumbnailUrl" placeholder="URL vignette (optionnel)" />
-        <button type="submit">Ajouter</button>
-      </form>
-    </details>
-  </section>
-
-  <main id="results" class="results"></main>
 
   <template id="media-card-template">
     <article class="media-card">
       <a class="thumb-link" target="_blank" rel="noopener noreferrer">
         <img class="thumb" alt="" />
+        <span class="thumb-placeholder"></span>
       </a>
       <div class="body">
         <a class="title" target="_blank" rel="noopener noreferrer"></a>

@@ -26,7 +26,7 @@ router.get("/", (req, res) => {
       : candidates.slice().sort((a, b) => b.score - a.score);
 
   const results = candidates.slice(offset, offset + limit).map(formatEntry);
-  res.json({ results, limit, offset });
+  res.json({ results, total: candidates.length, limit, offset });
 });
 
 function formatEntry(e) {
