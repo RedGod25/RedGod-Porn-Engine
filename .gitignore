@@ -1,0 +1,11 @@
+node_modules/
+dist/
+out/
+
+# Local search index — rebuilt from data/*.json via `npm run reindex`, never authoritative.
+index.sqlite
+index.sqlite-*
+
+npm-debug.log*
+.DS_Store
+Thumbs.db

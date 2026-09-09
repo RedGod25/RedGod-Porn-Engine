@@ -1,0 +1,25 @@
+{
+  "name": "redgod-porn-engine",
+  "version": "0.1.0",
+  "description": "Advanced search/indexing engine for adult media links, with community voting and tag validation. Indexes third-party links only — does not host media.",
+  "private": true,
+  "license": "CC-BY-NC-SA-4.0",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "server": "node scripts/dev-server.js",
+    "sync": "node server/git/sync.js",
+    "reindex": "node server/db/rebuild-index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "minisearch": "^7.2.0",
+    "nanoid": "^3.3.7"
+  },
+  "devDependencies": {
+    "electron": "^44.3.0"
+  },
+  "allowScripts": {
+    "electron@44.3.0": true
+  }
+}
