@@ -4,12 +4,15 @@
   "description": "Advanced search/indexing engine for adult media links, with community voting and tag validation. Indexes third-party links only — does not host media.",
   "private": true,
   "license": "CC-BY-NC-SA-4.0",
+  "author": "RedGod25",
   "main": "electron/main.js",
   "scripts": {
     "start": "electron .",
+    "dev": "electron .",
     "server": "node scripts/dev-server.js",
     "sync": "node server/git/sync.js",
-    "reindex": "node server/db/rebuild-index.js"
+    "reindex": "node server/db/rebuild-index.js",
+    "build": "electron-builder --win"
   },
   "dependencies": {
     "express": "^4.21.2",
@@ -17,9 +20,32 @@
     "nanoid": "^3.3.7"
   },
   "devDependencies": {
-    "electron": "^44.3.0"
+    "electron": "^44.3.0",
+    "electron-builder": "^26.15.3"
   },
   "allowScripts": {
-    "electron@44.3.0": true
+    "electron@44.3.0": true,
+    "electron-winstaller@5.4.0": true
+  },
+  "build": {
+    "appId": "com.redgod25.porn-engine",
+    "productName": "RedGod-Porn-Engine",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**",
+      "server/**",
+      "frontend/**",
+      "data/**",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
