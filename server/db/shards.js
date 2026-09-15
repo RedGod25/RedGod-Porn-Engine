@@ -1,6 +1,7 @@
 "use strict";
 
-// Read/append helpers for sharded collections (data/videos/, data/actors/).
+// Read/append helpers for sharded collections (data/shards/videos/,
+// data/shards/actors/).
 // Each shard is a JSON file holding up to SHARD_MAX_ENTRIES records:
 //   { entries: [ {...}, {...}, ... ] }
 // New entries are appended to the last shard until it's full, then a new
@@ -12,8 +13,14 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { DATA_DIR, SHARD_MAX_ENTRIES } = require("../config");
 
+// Collections live under data/shards/ rather than directly under data/, which
+// keeps them from colliding with the sibling tags/ and votes/ trees. Stated
+// once here: reads and the path returned for committing must never disagree,
+// or entries get written somewhere the index will not look for them.
+const SHARDS_SUBDIR = "shards";
+
 function collectionDir(collection) {
-  return path.join(DATA_DIR, collection);
+  return path.join(DATA_DIR, SHARDS_SUBDIR, collection);
 }
 
 function shardFileName(n) {
@@ -72,7 +79,7 @@ function appendEntry(collection, entry) {
   shard.entries.push(entry);
   fs.writeFileSync(path.join(dir, targetFile), JSON.stringify(shard, null, 2) + "\n");
 
-  return path.posix.join("data", collection, targetFile);
+  return path.posix.join("data", SHARDS_SUBDIR, collection, targetFile);
 }
 
 module.exports = { listShardFiles, readShard, readAllEntries, appendEntry };

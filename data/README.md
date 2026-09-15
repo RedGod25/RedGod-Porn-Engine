@@ -18,14 +18,14 @@ nothing to migrate or repair: it's just rebuilt.
 
 ```
 data/
-  videos/shard-00001.json      catalog entries, kind: "video" — up to 5000 per shard
-  actors/shard-00001.json      catalog entries, kind: "actor" — up to 5000 per shard
-  images/                      not implemented yet — shape TBD
+  shards/videos/shard-00001.json   catalog entries, kind: "video" — up to 5000 per shard
+  shards/actors/shard-00001.json   catalog entries, kind: "actor" — up to 5000 per shard
+  shards/images/                   not implemented yet — shape TBD
   tags/<entryId>/<proposalId>.json     one file per tag proposal on an entry
   votes/<entryId>/<voterId>.json        one file per (entry, voter) pair
 ```
 
-`videos/` and `actors/` are **sharded**: entries are appended to the last
+`shards/videos/` and `shards/actors/` are **sharded**: entries are appended to the last
 shard file until it reaches `SHARD_MAX_ENTRIES` (5000, see
 `server/config.js`), then a new shard file is started. This keeps the
 catalog from turning into hundreds of thousands of one-line files (which
@@ -38,7 +38,7 @@ is the expected recovery path for that.
 naturally small, independent, high-churn records where per-file granularity
 avoids conflicts almost entirely — the opposite trade-off from the catalog.
 
-## `videos/shard-NNNNN.json` / `actors/shard-NNNNN.json`
+## `shards/videos/shard-NNNNN.json` / `shards/actors/shard-NNNNN.json`
 
 ```json
 {
